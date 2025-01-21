@@ -1,0 +1,29 @@
+# write this workflow name
+name: action-test
+
+# on which event this workflow will run
+# on: [push] -> this will run the workflow on push event
+
+# specify the branches on which this workflow will run
+
+on:
+  push:
+    branches:
+      - main
+
+# jobs: this is the main part of the workflow, write what will do , and job can be multiple
+
+jobs:
+  test-job:
+    runs-on: ubuntu-latest # which OS will use this job to run
+    steps:
+      - run: echo "Test action is running"
+      - name: Checkout code
+        uses: actions/checkout@v4 # use 'uses' is used to use the action from the marketplace and use 'run' to run own command
+      - name: Run a one-line script
+        run: echo Hello, world!
+      - name: Run all the project file from the root directory
+        run: |
+          ls ${{ github.workspace }}
+      - name: Action completed
+        run: echo "Action completed"
