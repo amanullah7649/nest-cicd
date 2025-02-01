@@ -4,15 +4,15 @@ on: [push]
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # This is the operating system that the action will run on
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4 # This action checks out the code in the repository
       - name: Use Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v2 # This action sets up Node.js
         with:
-          node-version: '20'
+          node-version: '20' # This is the version of Node.js that will be used
       - name: Install dependencies
-        run: npm install
+        run: npm install # This command installs the dependencies
       - name: Run tests
-        run: npm test
-      - run: echo "Test action is running"
+        run: npm test # This command runs the tests
+      - run: echo "Test action is running" # This command prints a message to the console
