@@ -1,18 +1,49 @@
+# This is the name of the workflow. It will appear in the GitHub Actions tab.
 name: Run unit tests
 
+# This specifies when the workflow should be triggered.
+# In this case, it runs whenever there's a `push` event to the repository.
 on: [push]
 
+# The `jobs` section defines one or more jobs that will run as part of the workflow.
 jobs:
+  # This is the name of the job. You can name it anything, but here it's called `test`.
   test:
-    runs-on: ubuntu-latest # This is the operating system that the action will run on
+    # This specifies the type of virtual machine where the job will run.
+    # Here, we're using the latest version of Ubuntu.
+    runs-on: ubuntu-latest
+
+    # The `steps` section defines the sequence of actions that will be executed in this job.
     steps:
-      - uses: actions/checkout@v4 # This action checks out the code in the repository
+      # Step 1: Check out the code from the repository.
+      - name: Checkout code
+        # This is a pre-built GitHub Action that checks out the repository's code.
+        # Without this step, the workflow wouldn't have access to the codebase.
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Node.js environment.
       - name: Use Node.js
-        uses: actions/setup-node@v2 # This action sets up Node.js
+        # This is another pre-built GitHub Action that sets up a Node.js environment.
+        uses: actions/setup-node@v2
+        # The `with` keyword allows you to pass additional configuration options to the action.
         with:
-          node-version: '20' # This is the version of Node.js that will be used
+          # Specifies the version of Node.js to use. In this case, Node.js version 20.
+          node-version: '20'
+
+      # Step 3: Install project dependencies.
       - name: Install dependencies
-        run: npm install # This command installs the dependencies
+        # This command installs all the dependencies listed in the `package.json` file.
+        # These dependencies are required to run the tests.
+        run: npm install
+
+      # Step 4: Run the unit tests.
       - name: Run tests
-        run: npm test # This command runs the tests
-      - run: echo "Test action is running" # This command prints a message to the console
+        # This command runs the tests defined in the project.
+        # Typically, this executes the test script specified in the `package.json` file under the `"scripts"` section.
+        run: npm test
+
+      # Step 5: Print a message to the console (optional).
+      - name: Print message
+        # This is a simple shell command that prints a message to the console.
+        # It's useful for debugging or logging purposes.
+        run: echo "Test action is running"
